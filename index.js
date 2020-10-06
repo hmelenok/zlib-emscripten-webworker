@@ -34,8 +34,8 @@ document.querySelector(".mybutton").addEventListener("click", function () {
     const zip = await wasmWorker(
       firstFile.name,
       uint8_view,
-      //To point source of Web worker
-      window.location.href
+      //To point source of Web worker without slash in the end
+      window.location.href.slice(0, window.location.href.length - 1)
     );
     console.warn({ files, zip });
     offerFileAsDownload(zip, `${firstFile.name}.zip`, "application/zip");
