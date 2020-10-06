@@ -6,44 +6,18 @@ Emscripten + ZLib = JS Zip Tool
 # Usage 
 IDK yet, seems simple as:
 ```javascript
-import { wrap } from "comlink";
-import WasmWorker from "./wasm.worker";
-const wasmWorker = wrap(new WasmWorker());
-
-function offerFileAsDownload(content, filename, mime) {
-  mime = mime || "application/octet-stream";
-
-  console.log(
-    `Offering download of "${filename}", with ${content.length} bytes...`
-  );
-
-  var a = document.createElement("a");
-  a.download = filename;
-  a.href = URL.createObjectURL(new Blob([content], { type: mime }));
-  a.style.display = "none";
-
-  document.body.appendChild(a);
-  a.click();
-  setTimeout(() => {
-    document.body.removeChild(a);
-    URL.revokeObjectURL(a.href);
-  }, 2000);
-}
-
-document.querySelector(".mybutton").addEventListener("click", function () {
+  //File from file input
   let reader = new FileReader();
   const files = document.querySelector('[name="files"]').files;
-  const firstFile = files[0];
-  console.warn({ files, reader });
+  const firstFile = files[0];//For now only one file 
+  //Converting to Uint8Array
   reader.addEventListener("loadend", async (e) => {
     let result = reader.result;
     const uint8_view = new Uint8Array(result);
-
+    //Magic request to wasm worker
     const zip = await wasmWorker(firstFile.name, uint8_view);
-    console.warn({ files, zip });
+    //Usual convertation to file on browser (returns Uint8Array)
     offerFileAsDownload(zip, `${firstFile.name}.zip`, "application/zip");
   });
   reader.readAsArrayBuffer(firstFile);
-});
-
 ```
