@@ -1,0 +1,23 @@
+{
+  "name": "zlib-emscripten-webworker",
+  "version": "0.0.1",
+  "description": "zip in browser",
+  "main": "index.js",
+  "author": "Mykyta Khmel",
+  "license": "MIT",
+  "scripts": {
+    "compile": "sh ./build.sh",
+    "build": "webpack",
+    "serve": "npx serve ."
+  },
+  "dependencies": {
+    "comlink": "^4.3.0"
+  },
+  "devDependencies": {
+    "file-loader": "^6.1.0",
+    "prettier": "^2.1.2",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
+    "worker-loader": "^3.0.3"
+  }
+}
