@@ -2,12 +2,10 @@ import { expose } from "comlink";
 import zipWasm from "./wasm/zip.wasm";
 import zipJs from "./wasm/zip.js";
 
-const zip = async (fileName, uint8_view) =>
+const zip = async (fileName, uint8_view, originHref) =>
   new Promise(async (resolve) => {
     try {
-      const wasm = await fetch(
-        `${location.href.slice(0, location.href.length - 1)}${zipWasm}`
-      );
+      const wasm = await fetch(`${originHref || location.origin}${zipWasm}`);
       const buffer = await wasm.arrayBuffer();
       const { ccall, FS } = await zipJs({
         wasmBinary: buffer,

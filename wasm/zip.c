@@ -207,7 +207,7 @@ int EMSCRIPTEN_KEEPALIVE myFunction(char* file_path, char* zip_path) {
                 printf("cannot open file\n");
                 return 1;
             }
-    res = def(file, zip, Z_DEFAULT_COMPRESSION);
+    res = def(file, zip, 1);
 
     if (res != Z_OK){
         zerr(res);

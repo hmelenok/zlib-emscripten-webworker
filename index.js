@@ -31,7 +31,12 @@ document.querySelector(".mybutton").addEventListener("click", function () {
     let result = reader.result;
     const uint8_view = new Uint8Array(result);
 
-    const zip = await wasmWorker(firstFile.name, uint8_view);
+    const zip = await wasmWorker(
+      firstFile.name,
+      uint8_view,
+      //To point source of Web worker
+      window.location.href
+    );
     console.warn({ files, zip });
     offerFileAsDownload(zip, `${firstFile.name}.zip`, "application/zip");
   });
