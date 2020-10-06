@@ -5,7 +5,9 @@ import zipJs from "./wasm/zip.js";
 const zip = async (fileName, uint8_view) =>
   new Promise(async (resolve) => {
     try {
-      const wasm = await fetch(`${location.origin}${zipWasm}`);
+      const wasm = await fetch(
+        `${location.href.slice(0, location.href.length - 1)}${zipWasm}`
+      );
       const buffer = await wasm.arrayBuffer();
       const { ccall, FS } = await zipJs({
         wasmBinary: buffer,
